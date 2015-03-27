@@ -1,4 +1,5 @@
-# padrino-asset-pipeline
+# Padrino Asset Pipeline [![Build Status](https://travis-ci.org/Rendez/padrino-asset-pipeline.svg?branch=master)](https://travis-ci.org/Rendez/padrino-asset-pipeline)
+======================
 
 An asset pipeline implementation for Padrino based on [Sprockets](https://github.com/sstephenson/sprockets), **working for Padrino multi-apps**, with support for CoffeeScript, SASS, SCSS, LESS, ERB as well as CSS (SASS, YUI) and JavaScript (uglifier, YUI, Closure) minification.
 
@@ -19,6 +20,12 @@ require 'sinatra/asset_pipeline/task'
 
 Sinatra::AssetPipeline::Task.define!(SampleBlog::App)
 Sinatra::AssetPipeline::Task.define!(SampleBlog::Admin)
+```
+
+If your application runs Sinatra in classic style you can define your Rake task as follows:
+
+```ruby
+Sinatra::AssetPipeline::Task.define! Sinatra::Application
 ```
 
 Now, when everything is in place you can precompile assets located in `assets/<asset-type>` with:
@@ -71,6 +78,10 @@ module SampleBlog
       set :assets_precompile, %w(application.js application.css jquery.js *.png *.jpg *.svg *.eot *.ttf *.woff)
       # Logical paths to your assets
       set :assets_prefix, %w(app/assets)
+      # Use another host for serving assets
+      set :assets_host, '<id>.cloudfront.net'
+      # Serve assets using this protocol (http, :https, :relative)
+      set :assets_protocol, :http
       # CSS minification
       set :assets_css_compressor, :sass
       # JavaScript minification
