@@ -93,10 +93,18 @@ describe Sinatra::AssetPipeline do
       expect(last_response.body).to eq css_content
     end
 
-    it "serves an asset with a digest filename" do
-      get '/assets/constructocat2-b5921515627e82a923079eeaefccdbac.jpg'
+    describe "serves an asset with a digest filename" do
+      it "asset in the root folder" do
+        get '/assets/constructocat2-b5921515627e82a923079eeaefccdbac.jpg'
 
-      expect(last_response).to be_ok
+        expect(last_response).to be_ok
+      end
+
+      it "asset in a subfolder" do
+        get '/assets/other-folder/constructocat2-b5921515627e82a923079eeaefccdbac.jpg'
+
+        expect(last_response).to be_ok
+      end
     end
 
     it "serves only the asset body with query param body=1" do

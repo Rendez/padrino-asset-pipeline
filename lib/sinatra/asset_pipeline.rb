@@ -98,7 +98,7 @@ module Sinatra
       app.helpers Helpers
 
       app.configure :test, :development do
-        app.get "#{app.path_prefix || Sprockets::Helpers.prefix}/:path" do |path|
+        app.get %r{#{app.path_prefix || Sprockets::Helpers.prefix}\/(.*)} do |path|
           env_sprockets = request.env.dup
           env_sprockets['PATH_INFO'] = path
           settings.sprockets.call env_sprockets
